@@ -22,25 +22,20 @@
          const btn = document.querySelector("button")
  const imgDiv = document.querySelector("#img-article")
     btn.addEventListener('click', ()=> {
-      const country = document.querySelector('#country').value;
+      const country = document.querySelector('#country').value.toLowerCase();
       if (document.querySelector("img")) {
         document.querySelectorAll("img").forEach((img) => { img.remove() })
       }
       getCountryData(country)
     })
 
-    async function getCountryData(country) {
-      const res = await fetch('https://flagcdn.com/en/codes.json')
-      const conCodes = await res.json()
-      for (let code in conCodes) {
-        conCodes[code] = conCodes[code].toLowerCase()
-        if (conCodes[code] === country) {
-
+    const getCountryData = async function (country) {
+      const res = await fetch(`https://restcountries.com/v3.1/name/${country}`)
+      const countries = await res.json()
+      let flags = countries[0].flags.png;
           const flagImg = document.createElement("img")
-          flagImg.src = 'https://flagcdn.com/256x192/' + code + ".png"
+          flagImg.src = flags
           imgDiv.appendChild(flagImg)
-        }
-      }
     }
     </script>
 </body>
