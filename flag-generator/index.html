@@ -23,7 +23,8 @@
  const imgDiv = document.querySelector("#img-article")
     btn.addEventListener('click', ()=> {
       const country = document.querySelector('#country').value.toLowerCase();
-      if (document.querySelector("img")) {
+      const img = document.querySelector("img")
+      if (img) {
         document.querySelectorAll("img").forEach((img) => { img.remove() })
       }
       getCountryData(country)
