@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Flags</title>
+</head>
+<body>
+    <div class="flex relative justify-center w-full h-full  bg-white">
+        <div class="flex flex-col border border-lg w-72 p-20 m-2 mt-96 text-sm text-gray-500 rounded-lg">
+            <input type="text" class="p-2 w-full m-2 border rounded-lg" placeholder="Write a country's name" id="country" autofocus/>
+            <button class="w-full p-2 m-2 border bg-zinc-200 rounded-lg" >Get flag</button>
+        </div>
+        <div class="border border-lg w-72 p-20 m-2 mt-96 text-sm text-gray-500 rounded-lg">
+            <div id="img-article"></div>
+        </div>
+    </div>
+
+    <script>
+         const btn = document.querySelector("button")
+ const img = document.querySelector("img")
+ const imgDiv = document.querySelector("#img-article")
+    btn.addEventListener('click', ()=> {
+      const country = document.querySelector('#country').value;
+      if (img) {
+        document.querySelectorAll("img").forEach((img) => { img.remove() })
+      }
+      fetchData(country)
+    })
+
+    async function fetchData(country) {
+      const res = await fetch('https://flagcdn.com/en/codes.json')
+      const conCodes = await res.json()
+      for (let code in conCodes) {
+        conCodes[code] = conCodes[code].toLowerCase()
+        if (conCodes[code] === country) {
+
+          const flagImg = document.createElement("img")
+          flagImg.src = 'https://flagcdn.com/256x192/' + code + ".png"
+          imgDiv.appendChild(flagImg)
+        }
+      }
+    }
+    </script>
+</body>
+</html>
