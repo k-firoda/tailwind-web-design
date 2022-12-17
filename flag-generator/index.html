@@ -20,11 +20,10 @@
 
     <script>
          const btn = document.querySelector("button")
- const img = document.querySelector("img")
  const imgDiv = document.querySelector("#img-article")
     btn.addEventListener('click', ()=> {
       const country = document.querySelector('#country').value;
-      if (img) {
+      if (document.querySelector("img")) {
         document.querySelectorAll("img").forEach((img) => { img.remove() })
       }
       getCountryData(country)
