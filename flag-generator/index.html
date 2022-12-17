@@ -27,10 +27,10 @@
       if (img) {
         document.querySelectorAll("img").forEach((img) => { img.remove() })
       }
-      fetchData(country)
+      getCountryData(country)
     })
 
-    async function fetchData(country) {
+    async function getCountryData(country) {
       const res = await fetch('https://flagcdn.com/en/codes.json')
       const conCodes = await res.json()
       for (let code in conCodes) {
