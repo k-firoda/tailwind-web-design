@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <title>Tv Show</title>
+</head>
+<body class="bg-blue-100">
+    <div class="flex w-full h-full flex-wrap m-2 w-full " id="img-article">
+        <div class="flex flex-col bg-blue-200 border border-lg w-96 p-8  m-2 text-m text-blue-800 rounded-lg "><form action="" id="searchForm">
+            <input type="text" class="p-2 w-full m-2 border rounded-lg" placeholder="Tv Show Title" id="tvShow" name="query" autofocus/>
+            <button class="w-full p-2 m-2 border bg-blue-300 rounded-lg" >Get TV Show</button></form>
+        </div>
+        
+    </div>
+
+    <script>
+//         
+const form = document.querySelector('#searchForm');
+const imgDiv = document.querySelector("#img-article")
+form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const searchTerm = form.elements.query.value;
+    const config = { params: { q: searchTerm } }
+    const res = await axios.get(`http://api.tvmaze.com/search/shows`, config);
+    if (document.querySelector(".show")) {
+                document.querySelectorAll(".show").forEach((article) => { article.remove() })
+            }
+    makeImages(res.data)
+    form.elements.query.value = '';
+})
+
+const makeImages = (shows) => {
+    for (let result of shows) {
+        if (result.show.image) {
+            const img = result.show.image.medium;
+            const html = `<div class="show">
+            <img class="m-2" src="${img}" /></div>
+             `;
+  imgDiv.insertAdjacentHTML('beforeend', html);
+        }
+    }
+}
+    </script>
+</body>
+</html>
