@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <title>Random Joke</title>
+</head>
+<body class="bg-yellow-100">
+    <div class="flex justify-center content-center w-full h-full flex-col sm:flex-row ">
+        <div class="flex flex-col justify-center bg-yellow-50 border border-lg w-96 p-16 m-2 mx-auto mt-6 sm:mt-72 sm:mx-2 text-m text-yellow-800 rounded-lg">
+            <div class="text-center text-4xl p-2 m-2">🤣😂🤣</div>
+            <button class="w-full p-2 m-2 border bg-yellow-200 rounded-lg" >New Joke</button>
+        </div>
+        <div class="bg-yellow-50 border border-lg w-96 p-16 m-2 mx-auto mt-6 sm:mt-72 sm:mx-2 text-sm text-yellow-800 rounded-lg " id="img-article"></div>
+    </div>
+
+    <script>
+        const btn = document.querySelector("button")
+        const imgDiv = document.querySelector("#img-article")
+        btn.addEventListener('click', ()=> {
+            
+            if (document.querySelector(".joke")) {
+                document.querySelectorAll(".joke").forEach((article) => { article.remove() })
+            }
+            getDadJoke()
+        })
+
+        const getDadJoke = async function () {
+           try {
+            const config = { headers : { Accept : 'application/json'}}
+            const res = await axios.get(`https://icanhazdadjoke.com`,config);
+            joke = res.data.joke
+            console.log(joke);
+            const html = `
+            
+                    <p class="joke flex justify-center content-center m-2 text-yellow-800 text-2xl text-center">${joke}</p>  
+             `;
+  imgDiv.insertAdjacentHTML('beforeend', html);
+            
+           } catch (error) {
+            const html = `
+                    <p class="joke flex justify-center content-center m-2 text-yellow-800 text-2xl text-center">NO JOKES AVAILABLE🥹🥹🥹</p>  
+             `;
+  imgDiv.insertAdjacentHTML('beforeend', html);
+
+           } 
+            
+        }
+    </script>
+</body>
+</html>
